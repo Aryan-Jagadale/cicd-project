@@ -18,8 +18,8 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '18'
-          cache: 'npm'
+          node-version: "18"
+          cache: "npm"
 
       - name: Install dependencies
         run: npm ci
@@ -27,7 +27,7 @@ jobs:
       - name: Build React app
         run: npm run build
         env:
-          CI: false  # Prevents treating warnings as errors
+          CI: false # Prevents treating warnings as errors
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -45,3 +45,17 @@ jobs:
           aws cloudfront create-invalidation \
             --distribution-id ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }} \
             --paths "/*"
+      - name: Notify Success on Discord
+        if: success()
+        uses: rjstone/discord-webhook-notify@v1
+        with:
+            webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+            details: "✅ Deployment successful for commit ${{ github.sha }} on branch ${{ github.ref_name }}"
+            severity: info
+      - name: Notify Failure on Discord
+        if: failure()
+        uses: rjstone/discord-webhook-notify@v1
+        with:
+            webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+            details: "❌ Deployment failed for commit ${{ github.sha }} on branch ${{ github.ref_name }}"
+            severity: error
