@@ -1,0 +1,11 @@
+.submitWrapper{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.typoStyles{
+    margin-top: 1px;
+}
+.spanStyles{
+    font-weight: 700;
+}

@@ -1,0 +1,14 @@
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:300,400,800);
+*, *:before, *:after{
+  box-sizing: border-box;
+  padding: 0; margin: 0;
+  font-family: 'Open Sans', 'Helvetica Neue', Arial, sans-serif;
+  text-decoration: none;
+  color: #111;
+}
+
+html, body{background: white;}
+
+.react-flow__node{
+  border: 1.5px solid #111;
+}
